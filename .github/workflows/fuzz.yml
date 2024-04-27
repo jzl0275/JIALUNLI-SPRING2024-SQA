@@ -7,5 +7,9 @@ jobs:
     name: Automatically execute fuzz.py from GitHub actions
     runs-on: ubuntu-latest
     steps:
-      - run: python fuzz.py
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Run fuzz.py
+        run: python fuzz.py
         shell: bash
