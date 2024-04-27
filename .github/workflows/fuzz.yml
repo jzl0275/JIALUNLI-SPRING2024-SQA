@@ -7,8 +7,11 @@ jobs:
     name: Automatically execute fuzz.py from GitHub actions
     runs-on: ubuntu-latest
     steps:
-      - run: pip install -r requirements.txt
-        shell: bash
+      # this Action should follow steps to set up Python build environment
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
+        with:
+          path: "./requirements.txt"
 
       - run: python fuzz.py
         shell: bash
