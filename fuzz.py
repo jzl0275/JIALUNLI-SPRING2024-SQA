@@ -1,98 +1,60 @@
-"""Due to 4.b,  Create a `fuzz.py` file that fuzz 5 Python methods of my choice."""
+"""
+- Due to 4.b, Create a `fuzz.py` file that fuzz 5 Python methods of my choice.
+- Due to 4.c, Integrate forensics by modifying 5 Python methods of my choice.
+"""
+from mining.mining import deleteRepo, dumpContentIntoFile, cloneRepo, checkPythonFile, getPythonFileCount
+
 
 # fuzz python method 1
-def divide(v1, v2):
-    return v1 / v2
+def testDeleteRepo():
+    deleteRepo('file-will-never-exist', 'NONEXISTENT_DIRECTORY')
 
 # fuzz python method 2
-def open_file(file_path):
-    with open(file_path, "r") as f_obj:
-        for line in f_obj:
-            print(line)
+def testDumpContentIntoFile():
+    dumpContentIntoFile("test-content", None)
 
 # fuzz python method 3
-def write_file(file_path):
-    with open(file_path, "w") as f_obj:
-        f_obj.write("this is written by fuzz python method 3: write_file")
+def testCloneRepo():
+    cloneRepo("JIALUNLI-SPRING2024-SQA-not-existing", '/tmp/')
 
 # fuzz python method 4
-def append_file(file_path):
-    with open(file_path, "a") as f_obj:
-        f_obj.write("this is written by fuzz python method 3: write_file")
+def testCheckPythonFile():
+    checkPythonFile("/path-is-not-existing/something")
 
 # fuzz python method 5
-def dump_json_data(data, filename):
-    import json
+def testGetPythonFileCount():
+    getPythonFileCount("/path-is-not-existing/something")
     with open(filename, "w") as f_obj:
         json.dumps(data, f_obj)
 
 
 if __name__=='__main__':
-    # test cases for fuzz python method1
+    # test cases for fuzz python method 1
     try:
-        divide(3, 1)
+        testDeleteRepo()
     except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
+        print(f"1: testDeleteRepo() Failure for: {type(e).__name__}: {str(e)}")
 
+    # test cases for fuzz python method 2
     try:
-        divide(3, 0)
+        testDumpContentIntoFile()
     except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
+        print(f"2: testDumpContentIntoFile() Failure for: {type(e).__name__}: {str(e)}")
 
+    # test cases for fuzz python method 3
     try:
-        divide(3, "1")
+        testCloneRepo()
     except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
+        print(f"3: testCloneRepo() Failure for: {type(e).__name__}: {str(e)}")
 
+    # test cases for fuzz python method 4
     try:
-        divide(3, "0")
+        testCheckPythonFile()
     except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
+        print(f"4: testCheckPythonFile() Failure for: {type(e).__name__}: {str(e)}")
 
+    # test cases for fuzz python method 5
     try:
-        divide(3, True)
+        testGetPythonFileCount()
     except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
-
-    try:
-        divide(3, False)
-    except Exception as e:
-        print(f"1: divide() Failure for: {type(e).__name__}: {str(e)}")
-
-
-    # test cases for fuzz python method2
-    try:
-        open_file("file-will-never-exist")
-    except Exception as e:
-        print(f"2: open_file() Failure for: {type(e).__name__}: {str(e)}")
-
-    # test cases for fuzz python method3
-    try:
-        write_file("/tmp/")
-    except Exception as e:
-        print(f"3: write_file() Failure for: {type(e).__name__}: {str(e)}")
-
-    # test cases for fuzz python method4
-    try:
-        append_file("/tmp/")
-    except Exception as e:
-        print(f"4: append_file() Failure for: {type(e).__name__}: {str(e)}")
-
-    # test cases for fuzz python method5
-    try:
-        data = {
-            "team": "JIALUNLI",
-            "members": ["Jialun Li", "anyone else"],
-        }
-        dump_json_data(data, "/tmp/test_file")
-    except Exception as e:
-        print(f"5: dump_json_data() Failure for: {type(e).__name__}: {str(e)}")
-
-    try:
-        data = {
-            "team": "JIALUNLI",
-            "members": ["Jialun Li", "anyone else"],
-        }
-        dump_json_data(data, "/tmp/")
-    except Exception as e:
-        print(f"5: dump_json_data() Failure for: {type(e).__name__}: {str(e)}")
+        print(f"5: testGetPythonFileCount() Failure for: {type(e).__name__}: {str(e)}")
