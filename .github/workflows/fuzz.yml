@@ -10,6 +10,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@main
 
+      - name: Setup environment
+        run: pip install -r requirements.txt
+        shell: bash
+
       - name: Run fuzz.py
         run: python fuzz.py
         shell: bash
