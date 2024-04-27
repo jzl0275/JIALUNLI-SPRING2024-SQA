@@ -1,0 +1,14 @@
+name: Automatically execute fuzz.py from GitHub actions
+
+on: ["push"]
+
+jobs:
+  execute-fuzz:
+    name: Automatically execute fuzz.py from GitHub actions
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install -r requirements.txt
+        shell: bash
+
+      - run: python fuzz.py
+        shell: bash
